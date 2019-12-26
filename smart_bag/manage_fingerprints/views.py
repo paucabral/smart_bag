@@ -21,11 +21,14 @@ class Manage(View):
             cursor.execute("SELECT * FROM registered_prints WHERE accounts_acc_id={}".format(acc_id))
             registered_prints=dictfetchall(cursor)
             print(registered_prints)
-
         return render(request,template_name='manage_fingerprints/manage.html',context={'registered_prints':registered_prints})
 
     def post(self, request, *args, **kwargs):
-        pass
+        print_id = request.POST["print_id"]
+        print(print_id)
+        with connection.cursor() as cursor:
+            cursor.execute("DELETE FROM registered_prints WHERE print_id={}".format(print_id))
+        return redirect("/fingerprints/manage/")
 
 class Register(View):
     def get(self, request, *args, **kwargs):

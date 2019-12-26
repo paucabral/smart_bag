@@ -137,14 +137,17 @@
 				<th>Phone Number</th>
 				<th></th>
 			  </tr>
-			  	{% for i in registered_prints%}
+			  	{% for i in registered_prints %}
 				  <tr>
 					<td>{{ i.print_id }}</td>
 					<td>{{ i.fname }} {{ i.lname }}</td>
 					<td>{{ i.phone_num }}</td>
 					<td>
-						<input type="image" id="myimage" src="{% static 'img/delete.png' %}" height="30" width="30" value="{{ i.print_id }}">
-						<input type="image" id="myimage" src="{% static 'img/edit.png' %}" height="30" width="30" value="{{ i.print_id }}">
+						<form method="POST">{% csrf_token %}
+						<!-- <input type="image" id="myimage" src="{% static 'img/delete.png' %}" height="30" width="30" name="print_id" value="{{ i.print_id }}"/> -->
+						<button type="submit" name="ActionBTN" value="1" class="btn btn-danger">Delete</button><input type="hidden" name="print_id" value="{{i.print_id}}" />
+						</form>
+						<!-- <input type="image" id="myimage" src="{% static 'img/edit.png' %}" height="30" width="30"/> -->
 					</td>
 				</tr>
 				{% endfor %}
