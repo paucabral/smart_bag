@@ -16,7 +16,15 @@ def dictfetchall(cursor):
 
 class Home(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Home Working!")
+        acc_id = 1
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM notifs WHERE accounts_acc_id={}".format(acc_id))
+            notifs=dictfetchall(cursor)
+            cursor.execute("SELECT * FROM accounts WHERE acc_id={}".format(acc_id))
+            acc=dictfetchall(cursor)[0]
+            print(acc)
+
+        return render(request,template_name='notifs/home.html',context={'notifs':notifs,'acc':acc})
 
     def post(self, request, *args, **kwargs):
         pass

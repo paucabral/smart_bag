@@ -6,19 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
 
-    <title>BAG-YO || HOME</title>
+    <title>BAG-YO || MANAGE</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/home_style.css">
+    <link rel="stylesheet" href="css/manage_style.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-
 <body>
 
 <!-- TEMPLATE STARTS HERE -->
@@ -58,7 +57,7 @@
 		</style>
 
 		<div class="header" id="myHeader">
-		  <h2><center>Home</center></h2>
+		  <h2><center>Manage</center></h2>
 		</div>
 		
 	<!-- | SIDE NAVBAR | -->
@@ -70,10 +69,10 @@
 
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
-                <li class="active">
+                <li>
                     <a href="home.html">Home</a>
                 </li>
-                <li>
+                <li  class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -111,7 +110,6 @@
 	
 <!-- *TEMPLATE ENDS HERE* -->
 
-
 <!-- CONTENT PLACEMENT AND BUTTON COLLAPSE -->            
 		<!-- START COLLAPSE EFFECT -->
         <div id="content">
@@ -126,15 +124,43 @@
                 </div>
             </nav>
 		<!-- END COLLAPSE EFFECT -->
-
-		<!-- *REAL CONTENT STARTS HERE* -->            
-		{% block content %}
-        {% endblock %}
 		
-<!-- *CONTENT ENDS HERE* -->
-
-    
-
+		<!-- *REAL CONTENT STARTS HERE* --> 
+			<!-- REGISTERED PRINTS -->
+			<div class="gray col-sm-12 col-xs-12">
+			<h2><center><b>REGISTERED PRINTS</b></center></h2>
+			<table style="width:100%">
+			  <tr>
+				<th>User</th>
+				<th>ID</th> 
+				<th>Number</th>
+				<th>Delete</th>
+				<th>Edit</th>
+			  </tr>
+			  <tr>
+				<td>#</td>
+				<td>#</td>
+				<td>#</td>
+				<td><input type="image" id="myimage" src="pictures/delete.png" height="30" width="30"></td>
+				<td><input type="image" id="myimage" src="pictures/edit.png" height="30" width="30"></td>
+			  </tr>
+			  <tr>
+				<td>#</td>
+				<td>#</td>
+				<td>#</td>
+				<td><input type="image" id="myimage" src="pictures/delete.png" height="30" width="30"></td>
+				<td><input type="image" id="myimage" src="pictures/edit.png" height="30" width="30"></td>
+			  </tr>
+			  <tr>
+				<td>#</td>
+				<td>#</td>
+				<td>#</td>
+				<td><input type="image" id="myimage" src="pictures/delete.png" height="30" width="30"></td>
+				<td><input type="image" id="myimage" src="pictures/edit.png" height="30" width="30"></td>
+			  </tr>
+			</table>	
+			</div>
+		</div>
 </body>
 
 </html>

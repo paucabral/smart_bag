@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/home_style.css">
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -70,25 +71,25 @@
 
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
-                <li class="active">
-                    <a href="home.html">Home</a>
-                </li>
                 <li>
+                    <a href="/home/">Home</a>
+                </li>
+                <li class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="register.html">Register</a> <!-- REINHOLD -->
+                            <a href="/fingerprints/register/">Register</a> <!-- REINHOLD -->
                         </li>
                         <li>
-                            <a href="manage.html">Manage</a>
+                            <a href="/fingerprints/manage/">Manage</a>
                         </li>
                         <li>
-                            <a href="profile.html">Profile</a> <!-- GIO -->
+                            <a href="/manage-accounts/profile/">Profile</a> <!-- GIO -->
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="logout.html">Logout</a>
+                    <a href="/">Logout</a>
                 </li>
             </ul>
         </nav>
@@ -128,8 +129,85 @@
 		<!-- END COLLAPSE EFFECT -->
 
 		<!-- *REAL CONTENT STARTS HERE* -->            
-		{% block content %}
-        {% endblock %}
+		<div class='row'>
+			<!-- USER INFO -->
+			<div class="nearBlack col-sm-6 col-xs-6">
+				
+				<h2><p>User Info</p></h2>
+				<p><b>Owner:</b> {{ acc.fname }} {{ acc.lname }}
+				<br><b>Phone Number:</b> {{ acc.phone_num }}
+				<br><b>E-mail:</b> {{ acc.email }}
+				</p>
+			</div>
+			<!-- CLOCK -->
+			<div class="darkerGray col-sm-6 col-xs-6">
+				<center>
+					<link rel="stylesheet" type="text/css" href="{% static 'css/clock_style.css' %}">
+					  <script type="text/javascript">
+						window.onload = setInterval(clock,1000);
+
+						function clock()
+						{
+						  var d = new Date();
+						  
+						  var date = d.getDate();
+						  
+						  var month = d.getMonth();
+						  var montharr =["Jan","Feb","Mar","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
+						  month=montharr[month];
+						  
+						  var year = d.getFullYear();
+						  
+						  var day = d.getDay();
+						  var dayarr =["Sun","Mon","Tues","Wed","Thurs","Fri","Sat"];
+						  day=dayarr[day];
+						  
+						  var hour =d.getHours();
+						  var min = d.getMinutes();
+						  var sec = d.getSeconds();
+						
+						  document.getElementById("date").innerHTML=day+" "+date+" "+month+" "+year;
+						  document.getElementById("time").innerHTML=hour+":"+min+":"+sec;
+						}
+					  </script>
+					  
+					  <p id="date"></p>
+					  <p id="time"></p>
+
+				</center>
+			</div>
+			<!-- NOTIFICATIONS -->
+			<div class="gray col-sm-12 col-xs-12">
+			<h2><center><b>NOTIFICATIONS</b></center></h2>
+			<table style="width:100%">
+			  <tr>
+				<th>Status</th>
+				<th>User</th> 
+				<th>Time</th>
+			  </tr>
+			  {% for i in notifs %}
+			  	{% if i.status == "Error" %}
+					<tr>
+						<td bgcolor="#E74C3C">{{ i.status }}</td>
+						<td bgcolor="#E74C3C">{{ i.user }}</td>
+						<td bgcolor="#E74C3C">{{ i.time }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td bgcolor="#2ECC71">{{ i.status }}</td>
+						<td bgcolor="#2ECC71">{{ i.user }}</td>
+						<td bgcolor="#2ECC71">{{ i.time }}</td>
+					</tr>
+				{% endif %}
+
+			  {% endfor %}
+			</table>	
+			</div>
+		</div>
+
+		
+		
+		
 		
 <!-- *CONTENT ENDS HERE* -->
 

@@ -16,14 +16,29 @@ def dictfetchall(cursor):
 
 class Manage(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Manage prints Working!")
+        acc_id = 1
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM registered_prints WHERE accounts_acc_id={}".format(acc_id))
+            registered_prints=dictfetchall(cursor)
+            print(registered_prints)
+
+        return render(request,template_name='manage_fingerprints/manage.html',context={'registered_prints':registered_prints})
 
     def post(self, request, *args, **kwargs):
         pass
 
 class Register(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Register prints Working!")
+        return render(request,template_name='manage_fingerprints/register.html',context={})
 
     def post(self, request, *args, **kwargs):
-        pass
+        acc_id = 1
+        print_id = request.POST["print_id"]
+        fname = request.POST["fname"]
+        lname = request.POST["lname"]
+        phone_num = request.POST["phone_num"]
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO registered_prints VALUES({},'{}','{}','{}',{})".format(print_id, fname, lname, phone_num, acc_id))
+        return redirect("/fingerprints/manage/")
+
+        

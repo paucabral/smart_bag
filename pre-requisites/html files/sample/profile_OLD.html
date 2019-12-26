@@ -6,19 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
 
-    <title>BAG-YO || HOME</title>
+    <title>BAG-YO || PROFILE</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/home_style.css">
+    <link rel="stylesheet" href="manage_style.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-
 <body>
 
 <!-- TEMPLATE STARTS HERE -->
@@ -58,7 +57,7 @@
 		</style>
 
 		<div class="header" id="myHeader">
-		  <h2><center>Home</center></h2>
+		  <h2><center>Profile</center></h2>
 		</div>
 		
 	<!-- | SIDE NAVBAR | -->
@@ -69,15 +68,15 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
-                <li class="active">
+                <p> <center> <img src="..\BAGYO_Main\logo.png" width="180" height="180"> </center></p>
+                <li>
                     <a href="home.html">Home</a>
                 </li>
-                <li>
+                <li  class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="register.html">Register</a> <!-- REINHOLD -->
+                            <a href="#">Register</a> <!-- REINHOLD -->
                         </li>
                         <li>
                             <a href="manage.html">Manage</a>
@@ -88,7 +87,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="logout.html">Logout</a>
+                    <a href="#">Logout</a>
                 </li>
             </ul>
         </nav>
@@ -111,7 +110,6 @@
 	
 <!-- *TEMPLATE ENDS HERE* -->
 
-
 <!-- CONTENT PLACEMENT AND BUTTON COLLAPSE -->            
 		<!-- START COLLAPSE EFFECT -->
         <div id="content">
@@ -126,15 +124,31 @@
                 </div>
             </nav>
 		<!-- END COLLAPSE EFFECT -->
-
-		<!-- *REAL CONTENT STARTS HERE* -->            
-		{% block content %}
-        {% endblock %}
 		
-<!-- *CONTENT ENDS HERE* -->
-
-    
-
+		<!-- *REAL CONTENT STARTS HERE* --> 
+            <div class="row darkerGray col-sm-12 col-xs-12">
+                    <div class="column">
+						<img class="center" src="1s.jpg" alt="Budaul" height="400" width="400">
+                    </div>
+                <div class="column">
+                    <div class="wrapper">
+						<div class="container">
+                            <form>
+                            <label>Name</label><br/>
+                            <input type="text" name="first"><br/>
+                            <label>Email</label><br/>
+                            <input type="text" name="first"><br/>
+                            <label>Password</label><br/>
+                            <input type="text" name="first">
+							</form>   
+						</div>
+					</div>
+					<div class="col-sm-12 col-xs-12">
+                                <button class="button" onclick="window.location.href = '(HTML FILE)';">Update</button>
+                    </div>
+				</div>
+            </div>
+		</div>
+		
 </body>
-
 </html>

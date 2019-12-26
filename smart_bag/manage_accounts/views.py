@@ -23,7 +23,7 @@ class Login(View):
 
 class Profile(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Profile Working!")
+        return render(request,template_name='manage_accounts/profile.html',context={})
 
     def post(self, request, *args, **kwargs):
         pass

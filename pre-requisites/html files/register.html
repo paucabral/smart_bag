@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
 
-    <title>BAG-YO || HOME</title>
+    <title>BAG-YO || REGISTER</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/home_style.css">
+    <link rel="stylesheet" href="css/register_style.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -58,7 +58,7 @@
 		</style>
 
 		<div class="header" id="myHeader">
-		  <h2><center>Home</center></h2>
+		  <h2><center>Register</center></h2>
 		</div>
 		
 	<!-- | SIDE NAVBAR | -->
@@ -70,10 +70,10 @@
 
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
-                <li class="active">
+                <li>
                     <a href="home.html">Home</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -112,10 +112,10 @@
 <!-- *TEMPLATE ENDS HERE* -->
 
 
-<!-- CONTENT PLACEMENT AND BUTTON COLLAPSE -->            
-		<!-- START COLLAPSE EFFECT -->
+<!-- CONTENT STARTS HERE -->         
         <div id="content">
-
+            <body class="body1">
+                
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -125,12 +125,76 @@
                     </button>
                 </div>
             </nav>
-		<!-- END COLLAPSE EFFECT -->
+	
+			<div class="container">
+                <div class="row">
+                  <div class="col-sm">
+					<h7>PROCEDURES</h7>
+					<style>
+					h7	{
+					font-size: 36px;
+					font-weight: bold;
+					}
+					</style>
+				  <p>1. Enter ID of the bag.</p>
+				  <p>2. Enter First Name.</p>
+				  <p>3. Enter Last Name.</p>
+				  <p>4. Enter Phone Number.</p>
+				  <p>5. Accept and agree to terms and regulations.</p>
+				  <p>6. Click Register.</p>
+				  <style>
+				  p	{
+				  color: black;
+				  }
+				  </style>
+				  </div>
+				 <div class="col-sm">
 
-		<!-- *REAL CONTENT STARTS HERE* -->            
-		{% block content %}
-        {% endblock %}
-		
+            <form>
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">ID</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPassword" placeholder="ID of Bag">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPassword" placeholder="First Name">
+                    </div>
+                  </div>
+				  <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPassword" placeholder="Last Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPassword" placeholder="+639">
+                    </div>
+                  </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Agree to terms and regulations</label>
+                </div><br>
+                <button type="submit" class="button">Register</button>
+				
+              </form><br>
+				</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+
+                    </div>
+                </div>
+            
+
+
+    </div>
+</body>            
+
 <!-- *CONTENT ENDS HERE* -->
 
     

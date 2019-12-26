@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -6,19 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
 
-    <title>BAG-YO || HOME</title>
+    <title>BAG-YO || PROFILE</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/home_style.css">
+    <link rel="stylesheet" href="{% static 'css/profile_style.css' %}">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-
 <body>
 
 <!-- TEMPLATE STARTS HERE -->
@@ -31,7 +31,7 @@
 		}
 
 		.top-container {
-		  background-color: #;
+		  background-color: #f1f1f1;
 		  padding: 30px;
 		  text-align: center;
 		}
@@ -58,7 +58,7 @@
 		</style>
 
 		<div class="header" id="myHeader">
-		  <h2><center>Home</center></h2>
+		  <h2><center>Profile</center></h2>
 		</div>
 		
 	<!-- | SIDE NAVBAR | -->
@@ -70,25 +70,25 @@
 
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
-                <li class="active">
-                    <a href="home.html">Home</a>
-                </li>
                 <li>
+                    <a href="/home/">Home</a>
+                </li>
+                <li class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="register.html">Register</a> <!-- REINHOLD -->
+                            <a href="/fingerprints/register/">Register</a> <!-- REINHOLD -->
                         </li>
                         <li>
-                            <a href="manage.html">Manage</a>
+                            <a href="/fingerprints/manage/">Manage</a>
                         </li>
                         <li>
-                            <a href="profile.html">Profile</a> <!-- GIO -->
+                            <a href="/manage-accounts/profile/">Profile</a> <!-- GIO -->
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="logout.html">Logout</a>
+                    <a href="/">Logout</a>
                 </li>
             </ul>
         </nav>
@@ -111,11 +111,10 @@
 	
 <!-- *TEMPLATE ENDS HERE* -->
 
-
 <!-- CONTENT PLACEMENT AND BUTTON COLLAPSE -->            
 		<!-- START COLLAPSE EFFECT -->
         <div id="content">
-
+            <body class="body1">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -125,16 +124,40 @@
                     </button>
                 </div>
             </nav>
-		<!-- END COLLAPSE EFFECT -->
+            </body>
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <img src="pictures/1s.jpg" class="image1" alt="budagul">
+                  </div>
+                  <div class="col-sm">
+                    <form>
+                        <div class="form-group">
+                          <label for="name">Name</label>
+                          <input type="text" class="form-control" placeholder="Full Name">
+                          <small id="name" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Password</label>
+                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <button type="submit" class="button">Update</button>
+                      </form>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
 
-		<!-- *REAL CONTENT STARTS HERE* -->            
-		{% block content %}
-        {% endblock %}
+                    </div>
+                </div>
+              </div>
+    </div>
+</body>            
 		
-<!-- *CONTENT ENDS HERE* -->
-
-    
-
-</body>
 
 </html>
