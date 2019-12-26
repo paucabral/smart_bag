@@ -130,13 +130,13 @@
 			<!-- REGISTERED PRINTS -->
 			<div class="gray col-sm-12 col-xs-12">
 			<h2><center><b>REGISTERED PRINTS</b></center></h2>
-			<table style="width:100%">
-			  <tr>
+			<table id="tableID" style="width:100%">
+			  <thead>
 				<th>ID</th>
 				<th>User</th> 
 				<th>Phone Number</th>
 				<th></th>
-			  </tr>
+			  </thead>
 			  	{% for i in registered_prints %}
 				  <tr>
 					<td>{{ i.print_id }}</td>
@@ -154,6 +154,17 @@
 			</table>	
 			</div>
 		</div>
+		<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
+        <script>
+            $(document).ready( function () {
+            $('#tableID').DataTable(
+              {
+                  dom: 'Bftrip',
+                  buttons: ['copy', 'csv', 'excel', 'pdf', 'print']                  
+				}   );
+          }   );
+          </script>
 </body>
 
 </html>
