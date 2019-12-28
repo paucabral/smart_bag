@@ -27,3 +27,25 @@ class Profile(View):
 
     def post(self, request, *args, **kwargs):
         pass
+
+class Register(View):
+    def get(self, request, *args, **kwargs):
+        return render(request,template_name='manage_accounts/register.html',context={})
+        # return HttpResponse('Register Page created')
+
+    def post(self, request, *args, **kwargs):
+        username = request.POST["uname"]
+        fname = request.POST["fname"]
+        lname = request.POST["lname"]
+        email = request.POST["email"]
+        phone_num = request.POST["phone_num"]
+        raw_password = request.POST["password"]
+
+        hashed_password = make_password(raw_password)
+        print(hashed_password)
+
+        with connection.cursor() as cursor:
+                sql = "INSERT INTO accounts(username, fname, lname, email, phone_num, password) VALUES('{}','{}','{}','{}','{}','{}')".format(username, fname, lname, email, phone_num, hashed_password)
+                cursor.execute(sql)
+                connection.commit()
+        return redirect("/")
