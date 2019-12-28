@@ -1,28 +1,31 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome,brave,opera">
+	<!-- <meta http-equiv="refresh" content="1"/> -->
 
-    <title>BAG-YO || MANAGE</title>
+	<title>BAG-YO || LOGS</title>
+	
+	<!-- <script src="{% static 'js/updateable.js' %}"></script> -->
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/manage_style.css' %}">
-
+	<link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+	
 	<link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
-	<script src="//cdn.datatables.net/plug-ins/1.10.20/api/fnReloadAjax.js"></script>
 </head>
+
 <body>
 
 <!-- TEMPLATE STARTS HERE -->
@@ -62,7 +65,7 @@
 		</style>
 
 		<div class="header" id="myHeader">
-		  <h2><center>Manage</center></h2>
+		  <h2><center>Home</center></h2>
 		</div>
 		
 	<!-- | SIDE NAVBAR | -->
@@ -76,8 +79,8 @@
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
                 <li>
                     <a href="/home/">Home</a>
-				</li>
-				<li>
+                </li>
+                <li>
                     <a href="/home/logs/">Logs</a>
 				</li>
                 <li class="active">
@@ -95,7 +98,7 @@
                     </ul>
                 </li>
                 <li>
-					<a href="/">Logout</a>
+                    <a href="/">Logout</a>
                 </li>
             </ul>
         </nav>
@@ -118,6 +121,7 @@
 	
 <!-- *TEMPLATE ENDS HERE* -->
 
+
 <!-- CONTENT PLACEMENT AND BUTTON COLLAPSE -->            
 		<!-- START COLLAPSE EFFECT -->
         <div id="content">
@@ -132,17 +136,15 @@
                 </div>
             </nav>
 		<!-- END COLLAPSE EFFECT -->
-		
-		<!-- *REAL CONTENT STARTS HERE* --> 
-			<!-- REGISTERED PRINTS -->
-			<div class="gray col-sm-12 col-xs-12">
-			<h2><center><b>REGISTERED PRINTS</b></center></h2>
+
+		<!-- *REAL CONTENT STARTS HERE* -->            
+		<div class='row'>
+			<!-- NOTIFICATIONS -->
+			<div id="my_div" class="gray col-sm-12 col-xs-12">
+			<h2><center><b>LOGS</b></center></h2>
 
 			<style>
-					
-					
 					th, td {
-					  text-align: left;
 					  padding: 8px;
 					  text-align: center;
 					}
@@ -150,45 +152,74 @@
 						background-color: black;
 					  	color: #ffff;
 					}
-					tr:nth-child(odd) {background-color: #7c7d80;}
-					tr:nth-child(even) {background-color: #4f5154; color: black;}
 			</style>
 
-			<table id="tableID" style="width:100%">
+
+			<table id="tableID" style="width:100%" http-equiv="refresh" content="1">
 			  <thead>
-				<th>ID</th>
+				<th>Status</th>
 				<th>User</th> 
-				<th>Phone Number</th>
-				<th></th>
+				<th>Time</th>
 			  </thead>
-			  	{% for i in registered_prints %}
-				  <tr>
-					<td>{{ i.print_id }}</td>
-					<td>{{ i.fname }} {{ i.lname }}</td>
-					<td>{{ i.phone_num }}</td>
-					<td>
-						<form method="POST">{% csrf_token %}
-						<!-- <input type="image" id="myimage" src="{% static 'img/delete.png' %}" height="30" width="30" name="print_id" value="{{ i.print_id }}"/> -->
-						<button type="submit" name="ActionBTN" value="1" class="btn btn-danger">Delete</button><input type="hidden" name="print_id" value="{{i.print_id}}" />
-						</form>
-						<!-- <input type="image" id="myimage" src="{% static 'img/edit.png' %}" height="30" width="30"/> -->
-					</td>
-				</tr>
-				{% endfor %}
+
+			  {% for i in notifs %}
+			  	{% if i.status == "Error" %}
+					<tr>
+						<td bgcolor="#E74C3C">{{ i.status }}</td>
+						<td bgcolor="#E74C3C">{{ i.user }}</td>
+						<td bgcolor="#E74C3C">{{ i.time }}</td>
+						
+					</tr>
+				{% else %}
+					<tr>
+						<td bgcolor="#2ECC71">{{ i.status }}</td>
+						<td bgcolor="#2ECC71">{{ i.user }}</td>
+						<td bgcolor="#2ECC71">{{ i.time }}</td>
+					</tr>
+				{% endif %}
+			  {% endfor %}
+
 			</table>	
 			</div>
 		</div>
+		
+		<!-- <script>
+			setInterval(function(){
+   				$('#my_div').load('notifs');
+			}, 1000)
+
+		</script> -->
+
 		<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
         <script>
             $(document).ready( function () {
             $('#tableID').DataTable(
               {
-                  dom: 'Bftrip',
-                  buttons: ['copy', 'csv', 'excel', 'pdf', 'print']                  
+                  dom: 'Bftrlip',
+                  buttons: ['copy', 'csv', 'excel', 'pdf', 'print',]  ,
+				  "ordering":false,
+				  "lengthMenu": [[ 5, 10, 50, -1 ], [ 5, 10, 50, "All" ]],
+				  "pagingType": "full_numbers",
 				}   );
           }   );
+
 		  </script>
+		  
+		  <!-- <script>
+			setInterval( function () {
+				$('#tableID').DataTable().ajax.reload();
+			}, 1000 );
+		  </script> -->
+
+		
+		
+		
+		
+<!-- *CONTENT ENDS HERE* -->
+
+    
+
 </body>
 
 </html>
