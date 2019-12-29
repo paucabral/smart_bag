@@ -4,6 +4,6 @@ from . import views
 app_name = "manage-fingerprints"
 
 urlpatterns = [
-    path('manage/',views.Manage.as_view(),name='manage_prints'),
-    path('register/',views.Register.as_view(),name='register_prints'),
+    path('<int:acc_id>/manage/',views.Manage.as_view(),name='manage_prints'),
+    path('<int:acc_id>/register/',views.Register.as_view(),name='register_prints'),
 ]

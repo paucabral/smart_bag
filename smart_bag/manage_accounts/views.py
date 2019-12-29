@@ -34,17 +34,41 @@ class Login(View):
         
         if check_password(raw_password, result['password']):
             print("yehey")
-            return redirect("/home")
+            return redirect("/home/{}".format(result['acc_id']))
         else:
             print("boo!")
             return redirect("/")
 
 class Profile(View):
     def get(self, request, *args, **kwargs):
-        return render(request,template_name='manage_accounts/profile.html',context={})
+        acc_id = self.kwargs['acc_id']
+        with connection.cursor() as cursor:
+            sql = "SELECT*FROM accounts WHERE acc_id = '{}'".format(acc_id)
+            cursor.execute(sql)
+            acc = dictfetchall(cursor)[0]
+        return render(request,template_name='manage_accounts/profile.html',context={'acc':acc, 'acc_id':acc_id})
 
     def post(self, request, *args, **kwargs):
-        pass
+        acc_id = self.kwargs['acc_id']
+        username = request.POST["username"]
+        fname = request.POST["fname"]
+        lname = request.POST["lname"]
+        email = request.POST["email"]
+        phone_num = request.POST["phone_num"]
+        raw_password = request.POST["password"]
+
+        hashed_password = make_password(raw_password)
+
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE accounts SET username='{}' WHERE acc_id={}".format(username, acc_id))
+            cursor.execute("UPDATE accounts SET fname='{}' WHERE acc_id={}".format(fname, acc_id))
+            cursor.execute("UPDATE accounts SET lname='{}' WHERE acc_id={}".format(lname, acc_id))
+            cursor.execute("UPDATE accounts SET email='{}' WHERE acc_id={}".format(email, acc_id))
+            cursor.execute("UPDATE accounts SET phone_num='{}' WHERE acc_id={}".format(phone_num, acc_id))
+            cursor.execute("UPDATE accounts SET password='{}' WHERE acc_id={}".format(hashed_password, acc_id))
+        
+        return redirect("/home/{}".format(acc_id))
+        
 
 class Register(View):
     def get(self, request, *args, **kwargs):

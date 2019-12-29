@@ -16,7 +16,7 @@ def dictfetchall(cursor):
 
 class Home(View):
     def get(self, request, *args, **kwargs):
-        acc_id = 1
+        acc_id = self.kwargs['acc_id']
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM notifs WHERE accounts_acc_id={} ORDER BY time DESC LIMIT 5".format(acc_id))
             notifs=dictfetchall(cursor)
@@ -24,14 +24,14 @@ class Home(View):
             acc=dictfetchall(cursor)[0]
             print(acc)
 
-        return render(request,template_name='notifs/home.html',context={'notifs':notifs,'acc':acc})
+        return render(request,template_name='notifs/home.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
     def post(self, request, *args, **kwargs):
         pass
 
 class Notifs(View):
     def get(self, request, *args, **kwargs):
-        acc_id = 1
+        acc_id = self.kwargs['acc_id']
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM notifs WHERE accounts_acc_id={} ORDER BY time DESC LIMIT 5".format(acc_id))
             notifs=dictfetchall(cursor)
@@ -40,14 +40,14 @@ class Notifs(View):
             print(acc)
             print(notifs)
 
-        return render(request,template_name='notifs/notifs.html',context={'notifs':notifs,'acc':acc})
+        return render(request,template_name='notifs/notifs.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
     def post(self, request, *args, **kwargs):
         pass
 
 class Logs(View):
     def get(self, request, *args, **kwargs):
-        acc_id = 1
+        acc_id = self.kwargs['acc_id']
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM notifs WHERE accounts_acc_id={} ORDER BY time DESC".format(acc_id))
             notifs=dictfetchall(cursor)
@@ -55,7 +55,7 @@ class Logs(View):
             acc=dictfetchall(cursor)[0]
             print(acc)
 
-        return render(request,template_name='notifs/logs.html',context={'notifs':notifs,'acc':acc})
+        return render(request,template_name='notifs/logs.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
     def post(self, request, *args, **kwargs):
         pass

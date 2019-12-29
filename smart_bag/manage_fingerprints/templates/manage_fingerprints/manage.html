@@ -75,27 +75,27 @@
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
                 <li>
-                    <a href="/home/">Home</a>
-				</li>
-				<li>
-                    <a href="/home/logs/">Logs</a>
-				</li>
+                    <a href="/home/{{ acc_id }}/">Home</a>
+                </li>
+                <li>
+                  <a href="/home/{{ acc_id }}/logs/">Logs</a>
+                </li>
                 <li class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="/fingerprints/register/">Register</a> <!-- REINHOLD -->
+                            <a href="/fingerprints/{{ acc_id }}/register/">Register</a> <!-- REINHOLD -->
                         </li>
                         <li>
-                            <a href="/fingerprints/manage/">Manage</a>
+                            <a href="/fingerprints/{{ acc_id }}/manage/">Manage</a>
                         </li>
                         <li>
-                            <a href="/manage-accounts/profile/">Profile</a> <!-- GIO -->
+                            <a href="/manage-accounts/profile/{{ acc_id }}">Profile</a> <!-- GIO -->
                         </li>
                     </ul>
                 </li>
                 <li>
-					<a href="/">Logout</a>
+                    <a href="/">Logout</a>
                 </li>
             </ul>
         </nav>

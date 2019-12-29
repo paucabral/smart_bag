@@ -71,22 +71,22 @@
             <ul class="list-unstyled components">
                 <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
                 <li>
-                    <a href="/home/">Home</a>
+                    <a href="/home/{{ acc_id }}/">Home</a>
                 </li>
                 <li>
-                  <a href="/home/logs/">Logs</a>
+                  <a href="/home/{{ acc_id }}/logs/">Logs</a>
                 </li>
                 <li class="active">
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Options</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="/fingerprints/register/">Register</a> <!-- REINHOLD -->
+                            <a href="/fingerprints/{{ acc_id }}/register/">Register</a> <!-- REINHOLD -->
                         </li>
                         <li>
-                            <a href="/fingerprints/manage/">Manage</a>
+                            <a href="/fingerprints/{{ acc_id }}/manage/">Manage</a>
                         </li>
                         <li>
-                            <a href="/manage-accounts/profile/">Profile</a> <!-- GIO -->
+                            <a href="/manage-accounts/profile/{{ acc_id }}">Profile</a> <!-- GIO -->
                         </li>
                     </ul>
                 </li>
@@ -134,20 +134,36 @@
                     <img src="pictures/1s.jpg" class="image1" alt="budagul">
                   </div>
                   <div class="col-sm">
-                    <form>
+                    <form method="POST">{% csrf_token %}
                         <div class="form-group">
-                          <label for="name">Name</label>
-                          <input type="text" class="form-control" placeholder="Full Name">
+                          <label for="username">Username</label>
+                          <input type="text" class="form-control" placeholder="Username" name="username" value="{{ acc.username }}">
+                          <small id="name" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                          <label for="fname">First Name</label>
+                          <input type="text" class="form-control" placeholder="First Name" name="fname" value="{{ acc.fname }}">
+                          <small id="name" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                          <label for="lname">Last Name</label>
+                          <input type="text" class="form-control" placeholder="Last Name" name="lname" value="{{ acc.lname }}">
                           <small id="name" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" name="email" value="{{ acc.email }}">
+                            <small id="emailHelp" class="form-text text-muted">Please provide a valid email address.</small>
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Password</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                          <label for="phone_num">Phone Number</label>
+                          <input type="text" class="form-control" placeholder="Phone Number" name="phone_num" value="{{ acc.phone_num }}">
+                          <small id="name" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                          <small id="emailHelp" class="form-text text-muted">Enter current password to apply changes above on this account or enter a new password for this account inline with the changes above.</small>
                         </div>
                         <button type="submit" class="button">Update</button>
                       </form>
