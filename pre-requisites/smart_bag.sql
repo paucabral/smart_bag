@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `smart_bag_db`.`accounts` (
   `email` VARCHAR(45) NULL,
   `profile_img` VARCHAR(255) NULL,
   `phone_num` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
+  `password` TEXT NULL,
   PRIMARY KEY (`acc_id`))
 ENGINE = InnoDB;
 

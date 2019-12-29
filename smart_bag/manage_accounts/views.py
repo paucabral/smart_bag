@@ -19,7 +19,25 @@ class Login(View):
         return render(request,template_name='manage_accounts/login.html',context={})
 
     def post(self, request, *args, **kwargs):
-        pass
+        username = request.POST["username"]
+        raw_password = request.POST["password"]
+
+        with connection.cursor() as cursor:
+            sql = "SELECT*FROM accounts WHERE username = '{}'".format(username)
+            cursor.execute(sql)
+            try:
+                result = dictfetchall(cursor)[0]
+                print(result['password'])
+            except:
+                print("Account does not exists")
+                return redirect("/")    
+        
+        if check_password(raw_password, result['password']):
+            print("yehey")
+            return redirect("/home")
+        else:
+            print("boo!")
+            return redirect("/")
 
 class Profile(View):
     def get(self, request, *args, **kwargs):
@@ -42,10 +60,8 @@ class Register(View):
         raw_password = request.POST["password"]
 
         hashed_password = make_password(raw_password)
-        print(hashed_password)
 
         with connection.cursor() as cursor:
-                sql = "INSERT INTO accounts(username, fname, lname, email, phone_num, password) VALUES('{}','{}','{}','{}','{}','{}')".format(username, fname, lname, email, phone_num, hashed_password)
+                sql = 'INSERT INTO accounts(username, fname, lname, email, phone_num, password) VALUES("{}","{}","{}","{}","{}","{}")'.format(username, fname, lname, email, phone_num, hashed_password)
                 cursor.execute(sql)
-                connection.commit()
         return redirect("/")
