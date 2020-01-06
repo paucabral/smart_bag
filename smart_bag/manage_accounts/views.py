@@ -86,6 +86,17 @@ class Register(View):
         hashed_password = make_password(raw_password)
 
         with connection.cursor() as cursor:
+            cursor.execute("SELECT*FROM accounts WHERE username = '{}'".format(username))
+            accounts = dictfetchall(cursor)
+            try:
+                for i in accounts:
+                    if i['username'] == username:
+                        print('Account already exists!')
+                        return redirect("/register")
                 sql = 'INSERT INTO accounts(username, fname, lname, email, phone_num, password) VALUES("{}","{}","{}","{}","{}","{}")'.format(username, fname, lname, email, phone_num, hashed_password)
                 cursor.execute(sql)
-        return redirect("/")
+                return redirect("/")
+            except:
+                sql = 'INSERT INTO accounts(username, fname, lname, email, phone_num, password) VALUES("{}","{}","{}","{}","{}","{}")'.format(username, fname, lname, email, phone_num, hashed_password)
+                cursor.execute(sql)
+                return redirect("/")
