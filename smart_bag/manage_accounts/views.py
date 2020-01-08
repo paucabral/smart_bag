@@ -27,16 +27,13 @@ class Login(View):
             cursor.execute(sql)
             try:
                 result = dictfetchall(cursor)[0]
-                print(result['password'])
             except:
                 print("Account does not exists")
                 return redirect("/")    
         
         if check_password(raw_password, result['password']):
-            print("yehey")
             return redirect("/home/{}".format(result['acc_id']))
         else:
-            print("boo!")
             return redirect("/")
 
 class Profile(View):
@@ -73,7 +70,6 @@ class Profile(View):
 class Register(View):
     def get(self, request, *args, **kwargs):
         return render(request,template_name='manage_accounts/register.html',context={})
-        # return HttpResponse('Register Page created')
 
     def post(self, request, *args, **kwargs):
         username = request.POST["uname"]

@@ -22,7 +22,6 @@ class Home(View):
             notifs=dictfetchall(cursor)
             cursor.execute("SELECT * FROM accounts WHERE acc_id={}".format(acc_id))
             acc=dictfetchall(cursor)[0]
-            print(acc)
 
         return render(request,template_name='notifs/home.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
@@ -37,8 +36,6 @@ class Notifs(View):
             notifs=dictfetchall(cursor)
             cursor.execute("SELECT * FROM accounts WHERE acc_id={}".format(acc_id))
             acc=dictfetchall(cursor)[0]
-            print(acc)
-            print(notifs)
 
         return render(request,template_name='notifs/notifs.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
@@ -53,7 +50,6 @@ class Logs(View):
             notifs=dictfetchall(cursor)
             cursor.execute("SELECT * FROM accounts WHERE acc_id={}".format(acc_id))
             acc=dictfetchall(cursor)[0]
-            print(acc)
 
         return render(request,template_name='notifs/logs.html',context={'notifs':notifs, 'acc':acc, 'acc_id':acc_id})
 
