@@ -68,3 +68,14 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+--- Notifs stored proc
+-- -----------------------------------------------------
+DELIMITER //
+CREATE PROCEDURE uspnotifsuccess(IN qprint_id INT)
+  BEGIN
+    SET @a = (SELECT CONCAT(fname, " ", lname) FROM registered_prints WHERE print_id = qprint_id);
+    INSERT INTO notifs(status, user, accounts_acc_id, registered_prints_print_id) VALUES("Success", @a, 1, qprint_id);
+    END//
+DELIMITER ;
