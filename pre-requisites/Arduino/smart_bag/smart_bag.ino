@@ -1,37 +1,38 @@
-//R307 VCC Red 5V
+//R307 VCC Red 5V 
 //R307 GND Blk
-//R307 Yellow - INPUT (2)
-//R307 White - OUTPUT (3)
+//R307 Yellow - INPUT (TX19)
+//R307 White - OUTPUT (RX18)
 //Relay VCC 5V S
-//Relay + Output (4)
+//Relay + Output (6)
 //Relay - GND
 //RelayIN COM - VCC (5V, 9V)
 //Solenoid COM, GND
+//Solenoid VCC, NO
 //I2C VCC 5V
 //I2C GND
-//I2C SDA A4
-//I2C SCL A5
+//I2C SDA SDA20
+//I2C SCL SCL21
+//GSM TX 10
+//GSM RX 11
 
 
-#include <SoftwareSerial.h>
 #include <Adafruit_Fingerprint.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include "SIM900.h"
+#include "sms.h"
+SMSGSM sms;
 
-SoftwareSerial mySerial(2, 3);
+#define mySerial Serial1
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 32 // OLED display height, in pixels
-
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)  
-#define OLED_RESET    -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 32
+#define OLED_RESET    -1
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-#define NUMFLAKES     10 // Number of snowflakes in the animation example
-
+#define NUMFLAKES     10
 #define LOGO_HEIGHT   16
 #define LOGO_WIDTH    16
 static const unsigned char PROGMEM logo_bmp[] =
@@ -52,16 +53,27 @@ static const unsigned char PROGMEM logo_bmp[] =
   B01110000, B01110000,
   B00000000, B00110000 };
 
-int solenoid = 4;
+int solenoid = 6;
 
-void setup()  
-{
+int numdata;
+boolean started=false;
+char smsbuffer[160];
+char n[20];
+
+void setup(){
   Serial.begin(9600);
+  Serial.println("GSM Shield testing.");
   delay(100);
   
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
+  if (gsm.begin(2400)){
+    Serial.println("\nstatus=READY");
+    started=true;  
+  }
+  else Serial.println("\nstatus=IDLE");
+  
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){
     Serial.println(F("SSD1306 allocation failed"));
-    for(;;); // Don't proceed, loop forever
+    for(;;);
   }
 
   display.clearDisplay();
@@ -74,7 +86,7 @@ void setup()
   display.display();
   delay(2000); 
   
-  // set the data rate for the sensor serial port
+
   finger.begin(57600);
   delay(5);
   if (finger.verifyPassword()) {
@@ -103,9 +115,23 @@ void setup()
   Serial.println("Waiting for valid finger...");
 }
 
+void textSuccess(){
+  if(started){
+    if (sms.SendSMS("09953148842", "Bag was opened successfully by a recognized fingerprint."))
+      Serial.println("\nSMS sent OK");
+  }  
+}
+
+void textFailed(){
+  if(started){
+    if (sms.SendSMS("09953148842", "Failed attempt to open the bag due to unrecognized fingerprint."))
+      Serial.println("\nSMS sent OK");
+  }  
+}
+
 void loop(){
   getFingerprintID();
-  delay(50);            //don't ned to run this at full speed.
+  delay(50);
 }
 
 uint8_t getFingerprintID() {
@@ -135,8 +161,6 @@ uint8_t getFingerprintID() {
       return p;
   }
 
-  // OK success!
-
   p = finger.image2Tz();
   switch (p) {
     case FINGERPRINT_OK:
@@ -163,8 +187,7 @@ uint8_t getFingerprintID() {
       digitalWrite(solenoid, LOW);
       return p;
   }
-  
-  // OK converted!
+
   p = finger.fingerFastSearch();
   if (p == FINGERPRINT_OK) {
     Serial.println("Found a print match!");
@@ -178,6 +201,7 @@ uint8_t getFingerprintID() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
+    textFailed();
     digitalWrite(solenoid, LOW);
     return p;
   } else {
@@ -186,21 +210,18 @@ uint8_t getFingerprintID() {
     return p;
   }   
   
-  // found a match!
   Serial.print("Found ID #"); Serial.print(finger.fingerID); 
   Serial.print(" with confidence of "); Serial.println(finger.confidence);
   display.clearDisplay();
   display.setCursor(0, 10);
   display.print("Found ID #"); display.display(); display.print(finger.fingerID); display.display();
-
-  
+  textSuccess();
   digitalWrite(solenoid, HIGH);
   delay(2500);
   digitalWrite(solenoid, LOW);
   return finger.fingerID;
 }
 
-// returns -1 if failed, otherwise returns ID #
 int getFingerprintIDez() {
   uint8_t p = finger.getImage();
   if (p != FINGERPRINT_OK){
@@ -209,6 +230,7 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
+    textFailed();
     digitalWrite(solenoid, LOW);
     return -1;
     }
@@ -220,6 +242,7 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
+    textFailed();
     digitalWrite(solenoid, LOW);
     return -1;
     }
@@ -231,16 +254,17 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
+    textFailed();
     digitalWrite(solenoid, LOW);
     return -1;
     }
-  // found a match!
+
   Serial.print("Found ID #"); Serial.print(finger.fingerID); 
   Serial.print(" with confidence of "); Serial.println(finger.confidence);
   display.clearDisplay();
   display.setCursor(0, 10);
   display.print("Found ID #"); display.display(); display.print(finger.fingerID); display.display(); 
-  
+  textSuccess();
   digitalWrite(solenoid, HIGH);
   delay(2500);
   return finger.fingerID; 
