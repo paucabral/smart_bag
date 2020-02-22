@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'notifs',
     'manage_fingerprints',
     'manage_accounts',
+    'rest_framework',
     # 'updateable',
 ]
 
