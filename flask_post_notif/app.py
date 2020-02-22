@@ -27,10 +27,12 @@ def index():
 
         cursor.execute('INSERT INTO notifs(status, user, accounts_acc_id, registered_prints_print_id) VALUES("Success", "{} {}", 1, {})'.format(fname, lname, print_id))
         conn.commit()
-    #cursor.execute("UPDATE alumni SET ispaid = 1 WHERE fname = '{}' AND lname = '{}' AND email = '{}' AND isregistered = 1".format(fname, lname, email))
-    #conn.commit()
+    else:
+        cursor.execute('INSERT INTO notifs(status, user, accounts_acc_id) VALUES("Error", "Unknown", 1)')
+        conn.commit()
+
     
-    return "return render_template() here"
+    return "POST request success"
 
 
 if __name__ == "__main__":
