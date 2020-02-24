@@ -41,4 +41,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug = True, host= '192.168.254.107')
+    app.run(debug = True, host= '192.168.43.134')

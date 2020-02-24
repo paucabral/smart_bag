@@ -22,7 +22,7 @@ void setup()
   sendToWifi("AT+RST",responseTime,DEBUG);
   //Serial.println("AT+RST");
   
-  sendToWifi("AT+CWJAP=\"cabral\",\"17151613\"",responseTime,DEBUG);
+  sendToWifi("AT+CWJAP=\"palit\",\"12345678\"",responseTime,DEBUG);
   //Serial.println("AT+CWJAP=\"cabral\",\"17151613\"");
   delay(4000);
   
@@ -56,7 +56,7 @@ void loop(){
   String startMsg = "";
   startMsg += "AT+CIPSTART=0,";
   startMsg += "\"TCP\",";
-  startMsg += "\"192.168.254.107\",";
+  startMsg += "\"192.168.43.134\",";
   startMsg += "5000";
   sendToWifi(startMsg, responseTime, DEBUG);
   startMsg = "";
@@ -74,7 +74,7 @@ void loop(){
   cipPOST = "";
 
   String cipHost = "";
-  cipHost += "Host:192.168.254.107:5000";
+  cipHost += "Host:192.168.43.134:5000";
   sendToWifi(cipHost, responseTime, DEBUG);
   cipHost = "";
 
