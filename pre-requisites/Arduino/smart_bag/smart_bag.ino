@@ -31,6 +31,8 @@
 SMSGSM sms;
 
 #define mySerial Serial1
+//#define wifiSerial Serial2
+
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 #define SCREEN_WIDTH 128
@@ -167,14 +169,14 @@ void setup(){
 
 void textSuccess(){
   if(started){
-    if (sms.SendSMS("09953148842", "Bag was opened successfully by a recognized fingerprint."))
+    if (sms.SendSMS("09061771646", "Bag was opened successfully by a recognized fingerprint."))
       Serial.println("\nSMS sent OK");
   }  
 }
 
 void textFailed(){
   if(started){
-    if (sms.SendSMS("09953148842", "Failed attempt to open the bag due to unrecognized fingerprint."))
+    if (sms.SendSMS("09061771646", "Failed attempt to open the bag due to unrecognized fingerprint."))
       Serial.println("\nSMS sent OK");
   }  
 }
@@ -360,9 +362,11 @@ uint8_t getFingerprintID() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
-    textFailed();
+    
     digitalWrite(solenoid, LOW);
     notfoundPOST();
+    delay(1000);
+    textFailed();
     return p;
   } else {
     Serial.println("Unknown error");
@@ -375,11 +379,14 @@ uint8_t getFingerprintID() {
   display.clearDisplay();
   display.setCursor(0, 10);
   display.print("Found ID #"); display.display(); display.print(finger.fingerID); display.display();
-  textSuccess();
+  
   digitalWrite(solenoid, HIGH);
   delay(2500);
   digitalWrite(solenoid, LOW);
+  delay(1000);
   foundPOST(finger.fingerID);
+  delay(4000);
+  textSuccess();
   return finger.fingerID;
 }
 
@@ -391,9 +398,11 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
-    textFailed();
+    
     digitalWrite(solenoid, LOW);
     notfoundPOST();
+    delay(1000);
+    textFailed();
     return -1;
     }
 
@@ -404,9 +413,11 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
-    textFailed();
+    
     digitalWrite(solenoid, LOW);
     notfoundPOST();
+    delay(1000);
+    textFailed();
     return -1;
     }
 
@@ -417,9 +428,11 @@ int getFingerprintIDez() {
     display.setCursor(0, 10);
     display.println("No match found!");
     display.display();
-    textFailed();
+    
     digitalWrite(solenoid, LOW);
     notfoundPOST();
+    delay(1000);
+    textFailed();
     return -1;
     }
 
@@ -428,11 +441,14 @@ int getFingerprintIDez() {
   display.clearDisplay();
   display.setCursor(0, 10);
   display.print("Found ID #"); display.display(); display.print(finger.fingerID); display.display(); 
-  textSuccess();
+  
   digitalWrite(solenoid, HIGH);
   delay(2500);
   digitalWrite(solenoid, LOW);
+  delay(1000);
   foundPOST(finger.fingerID);
+  delay(4000);
+  textSuccess();
   return finger.fingerID; 
 }
 
