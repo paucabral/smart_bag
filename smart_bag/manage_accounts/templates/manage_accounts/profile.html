@@ -69,7 +69,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p> <center> <img src="..\BAGYO_Main\pictures\logo.png" width="180" height="180"> </center></p>
+                <p> <center> <img src="{% static 'img/logo.png' %}" width="180" height="180"> </center></p>
                 <li>
                     <a href="/home/{{ acc_id }}/">Home</a>
                 </li>
@@ -131,8 +131,7 @@
             <div class="container">
                 <div class="row">
                   <div class="col-sm">
-                    <img src="#" class="blah" alt="your image">
-                    <input type='file' onchange="readURL(this);" />
+                    <img src="{% static 'img/logo.png' %}" class="blah" alt="your image">
                   </div>
                   <div class="col-sm">
                     <form method="POST">{% csrf_token %}
@@ -177,23 +176,5 @@
                 </div>
               </div>
     </div>
-
-    <script>
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#blah')
-                    .attr('src', e.target.result)
-                    .width(150)
-                    .height(200);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    </script>
-
 </body>            
 </html>

@@ -10,8 +10,8 @@
 //Solenoid VCC, NO
 //I2C VCC 5V
 //I2C GND
-//I2C SDA SDA20
-//I2C SCL SCL21
+//I2C SDA SDA20 (Green)
+//I2C SCL SCL21 (Yellow)
 //GSM TX 10
 //GSM RX 11
 //ESP VCC 3.3 V
@@ -129,7 +129,7 @@ void setup(){
   display.setTextColor(WHITE);
   display.setCursor(10, 0);
   
-  Serial.println("\n\nAdafruit finger detect test");
+  Serial.println("\n\nIgNITE Smart Bag");
   display.println("IgNITE \nSmart Bag");
   display.display();
   delay(2000); 
@@ -169,7 +169,7 @@ void setup(){
 
 void textSuccess(){
   if(started){
-    if (sms.SendSMS("09953148842", "Bag was opened successfully by a recognized fingerprint."))
+    if (sms.SendSMS("09953148842", "The bag was opened successfully by a registered fingeprint. Please check the web application for details."))
       Serial.println("\nSMS sent OK");
   }  
 }
@@ -184,6 +184,8 @@ void textFailed(){
 //Success WiFi POST
 void foundPOST(int id){ //Enter finger id as argument
   int print_id = id;
+
+  String PostMessage = "";
   PostMessage += "{\"print_id\":";
   PostMessage += "\"";
   PostMessage += print_id;
@@ -191,7 +193,18 @@ void foundPOST(int id){ //Enter finger id as argument
   PostMessage += "}";
 
   unsigned int l=PostMessage.length();
-
+  
+  String JSON = "";
+  JSON += "POST /post/notif HTTP/1.1\n";
+  JSON += "Host:192.168.254.107:5000\n";
+  JSON += "Content-Length:";
+  JSON += l;
+  JSON += "\n";
+  JSON += "Content-Type:application/json\n\n";
+  JSON += PostMessage;
+  
+  unsigned int i = JSON.length();
+  
   String startMsg = "";
   startMsg += "AT+CIPSTART=0,";
   startMsg += "\"TCP\",";
@@ -202,42 +215,25 @@ void foundPOST(int id){ //Enter finger id as argument
   delay(4000);
   
   String cipMsg = "";
-  cipMsg += "AT+CIPSEND=0,134";
+  cipMsg += "AT+CIPSEND=0,";
+  cipMsg += i;
   sendToWifi(cipMsg, responseTime, DEBUG);
   cipMsg = "";
   delay(4000);
 
-  String cipPOST = "";
-  cipPOST += "POST /post/notif HTTP/1.1";
-  sendToWifi(cipPOST, responseTime, DEBUG);
-  cipPOST = "";
-
-  String cipHost = "";
-  cipHost += "Host:192.168.254.107:5000";
-  sendToWifi(cipHost, responseTime, DEBUG);
-  cipHost = "";
-
-  String conLMsg = "";
-  conLMsg = "Content-Length:16";
-  sendToWifi(conLMsg, responseTime, DEBUG);
-  conLMsg = "";
-
-  String contentMsg = "Content-Type:application/json\n";
-  sendToWifi(contentMsg, responseTime, DEBUG);
-  contentMsg = "";
-  
-  sendToWifi(PostMessage, responseTime, DEBUG);
-
-  PostMessage = "";
-
   String closeMsg = "";
   closeMsg += "AT+CIPCLOSE=0,";
   sendToWifi(closeMsg, responseTime, DEBUG);
+
+  JSON = "";
+  PostMessage = "";
 }
 
 //Error WiFi POST
 void notfoundPOST(){ //print_id is 0 when the fingerprint was not recognized
   int print_id = 0;
+  
+  String PostMessage = "";
   PostMessage += "{\"print_id\":";
   PostMessage += "\"";
   PostMessage += print_id;
@@ -245,7 +241,18 @@ void notfoundPOST(){ //print_id is 0 when the fingerprint was not recognized
   PostMessage += "}";
 
   unsigned int l=PostMessage.length();
-
+  
+  String JSON = "";
+  JSON += "POST /post/notif HTTP/1.1\n";
+  JSON += "Host:192.168.254.107:5000\n";
+  JSON += "Content-Length:";
+  JSON += l;
+  JSON += "\n";
+  JSON += "Content-Type:application/json\n\n";
+  JSON += PostMessage;
+  
+  unsigned int i = JSON.length();
+  
   String startMsg = "";
   startMsg += "AT+CIPSTART=0,";
   startMsg += "\"TCP\",";
@@ -256,37 +263,18 @@ void notfoundPOST(){ //print_id is 0 when the fingerprint was not recognized
   delay(4000);
   
   String cipMsg = "";
-  cipMsg += "AT+CIPSEND=0,134";
+  cipMsg += "AT+CIPSEND=0,";
+  cipMsg += i;
   sendToWifi(cipMsg, responseTime, DEBUG);
   cipMsg = "";
   delay(4000);
 
-  String cipPOST = "";
-  cipPOST += "POST /post/notif HTTP/1.1";
-  sendToWifi(cipPOST, responseTime, DEBUG);
-  cipPOST = "";
-
-  String cipHost = "";
-  cipHost += "Host:192.168.254.107:5000";
-  sendToWifi(cipHost, responseTime, DEBUG);
-  cipHost = "";
-
-  String conLMsg = "";
-  conLMsg = "Content-Length:16";
-  sendToWifi(conLMsg, responseTime, DEBUG);
-  conLMsg = "";
-
-  String contentMsg = "Content-Type:application/json\n";
-  sendToWifi(contentMsg, responseTime, DEBUG);
-  contentMsg = "";
-  
-  sendToWifi(PostMessage, responseTime, DEBUG);
-
-  PostMessage = "";
-
   String closeMsg = "";
   closeMsg += "AT+CIPCLOSE=0,";
   sendToWifi(closeMsg, responseTime, DEBUG);
+
+  JSON = "";
+  PostMessage = "";
 }
 
 
@@ -385,7 +373,7 @@ uint8_t getFingerprintID() {
   digitalWrite(solenoid, LOW);
   delay(1000);
   foundPOST(finger.fingerID);
-  delay(4000);
+  delay(1000);
   textSuccess();
   return finger.fingerID;
 }
@@ -447,7 +435,7 @@ int getFingerprintIDez() {
   digitalWrite(solenoid, LOW);
   delay(1000);
   foundPOST(finger.fingerID);
-  delay(4000);
+  delay(1000);
   textSuccess();
   return finger.fingerID; 
 }
